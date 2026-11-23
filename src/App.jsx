@@ -5,11 +5,9 @@ import SearchBar from "./components/SearchBar";
 import "./App.css";
 
 function App() {
-  // Lab 3 cart state
   const [cartCount, setCartCount] = useState(0);
   const [lastAdded, setLastAdded] = useState("");
 
-  // Lab 4 state
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -20,16 +18,14 @@ function App() {
     setLastAdded(title);
   };
 
-  // Debounce effect: wait 300ms after the user stops typing
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchText);
     }, 300);
 
-    return () => clearTimeout(timer); // cleanup
+    return () => clearTimeout(timer);
   }, [searchText]);
 
-  // Derived list: calculated during render, not stored in state
   let filteredProducts = products.filter((product) => {
     const matchesSearch = product.title
       .toLowerCase()
@@ -38,7 +34,6 @@ function App() {
     return matchesSearch && matchesCategory;
   });
 
-  // filter() already returned a new array, but we copy again to be explicit
   filteredProducts = [...filteredProducts];
   if (sortOrder === "low-high") {
     filteredProducts.sort((a, b) => a.price - b.price);
@@ -46,7 +41,6 @@ function App() {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
 
-  // Title effect: runs only when the number of results changes
   useEffect(() => {
     document.title = `CvSU Mini Store (${filteredProducts.length} results)`;
   }, [filteredProducts.length]);
