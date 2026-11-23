@@ -1,3 +1,4 @@
+import { Children } from "react";
 import "./ProductCard.css";
 
 function ProductCard({ title, price, category = "General", inStock, onAddToCart, children }) {
@@ -8,7 +9,7 @@ function ProductCard({ title, price, category = "General", inStock, onAddToCart,
 
   return (
     <div className={`product-card ${inStock ? "" : "out-of-stock"}`}>
-      {children && <div className="badge">{children}</div>}
+      {Children.toArray(children).length > 0 && <div className="badge">{children}</div>}
       <h3>{title}</h3>
       <p className="category">{category}</p>
       <p className="price">₱{formattedPrice}</p>
@@ -21,5 +22,7 @@ function ProductCard({ title, price, category = "General", inStock, onAddToCart,
     </div>
   );
 }
+
+
 
 export default ProductCard;
